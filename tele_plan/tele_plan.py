@@ -37,8 +37,7 @@ async def get_timetable(telegram_message: types.Message):
 
 async def main():
     # Grab an API token from `env``
-    with open(os.getenv("TELEGRAM_BOT_API")) as secret_file:
-        token = secret_file.read()
+    token = os.getenv("TELEGRAM_BOT_API")
     # Create the Bot
     bot = Bot(token)
     try:
