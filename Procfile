@@ -1,1 +1,1 @@
-worker: poetry run python3 /tele_plan/tele_plan.py
+worker: python3 /tele_plan/tele_plan.py
