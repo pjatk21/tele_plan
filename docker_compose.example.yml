@@ -1,0 +1,14 @@
+version: '3'
+secrets:
+  telegram_token:
+    # Here give token to your bot
+
+services:
+  tele_plan:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    secrets:
+      - telegram_token
+    environment:
+      - TELEGRAM_BOT_API=/run/secrets/telegram_token
