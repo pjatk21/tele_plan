@@ -1,0 +1,1 @@
+web: poetry run python3 /tele_plan/tele_plan.py
