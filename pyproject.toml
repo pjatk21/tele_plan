@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "tele_plan"
+version = "1.0.0"
+description = "Simple Telegram bot showing timetable for one group at PJATK"
+authors = ["Rafał Opiłowski <rafalopilowski1@outlook.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "^2.19"
+httpx = "^0.22.0"
+asyncio = "^3.4.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
