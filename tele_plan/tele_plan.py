@@ -33,7 +33,7 @@ async def get_timetable(telegram_message: types.Message):
         r = await client.get(url, params={"groups": ["WIs I.2 - 46c", "WIs I.2 - 1w"]})
     payload = r.json()
 
-    if len(payload['entries']) == 0:
+    if not payload['entries']:
         message = utils.markdown.bold("Dzisiaj nie masz lekcji! 😎")
         await telegram_message.answer(message, types.ParseMode.MARKDOWN_V2)
     else:
