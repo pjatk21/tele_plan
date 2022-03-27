@@ -1,12 +1,10 @@
 import asyncio
 import logging
 import os
-from tkinter import S
 from typing import List
 import httpx
-from urllib.parse import urlencode
 
-from datetime import date, timedelta
+from datetime import date
 from aiogram import Bot, Dispatcher, types, utils, executor
 from timetable_entry import Entry
 
@@ -30,12 +28,10 @@ async def get_timetable(telegram_message: types.Message):
     date_today = date.today()
     # TODO: Make groups customizable by env (?) or select them at `/start`
     url = f"https://altapi.kpostek.dev/v1/timetable/date/{date_today.isoformat()}"
-    # url = base_url + urlencode({"groups": ["WIs I.2 - 46c", "WIs I.2 - 1w"]})
 
     async with httpx.AsyncClient() as client:
         r = await client.get(url, params={"groups": ["WIs I.2 - 46c", "WIs I.2 - 1w"]})
     payload = r.json()
-    print(url, payload)
 
     if len(payload['entries']) == 0:
         message = utils.markdown.bold("Dzisiaj nie masz lekcji! 😎")
