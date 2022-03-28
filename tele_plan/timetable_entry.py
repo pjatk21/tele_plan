@@ -25,13 +25,19 @@ class Entry:
             tz_str = os.getenv("TIMEZONE")
         except:
             raise Exception("No TIMEZONE env found!")
-        tz = pytz.timezone(tz_str)
+        set_tz = pytz.timezone(tz_str)
+
+        utc_begin: datetime = datetime.fromisoformat(json['begin'][:-1],tz=timezone.utc)
+        utc_end: datetime = datetime.fromisoformat(json['end'][:-1],tz=timezone.utc)
+
+        tz_begin = utc_begin.astimezone(tz=set_tz)
+        tz_end = utc_end.astimezone(tz=set_tz)
 
         return self(
-            begin=tz.fromutc(datetime.fromisoformat(json['begin'][:-1]).astimezone(timezone.utc)),
+            begin=tz_begin,
             building=json['building'],
             code=json['code'],
-            end=tz.fromutc(datetime.fromisoformat(json['end'][:-1]).astimezone(timezone.utc)),
+            end=tz_end,
             groups=json['groups'],
             name=json['name'],
             room=json['room'],
