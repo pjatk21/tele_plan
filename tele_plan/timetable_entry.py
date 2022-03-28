@@ -18,6 +18,7 @@ class Entry:
 
     @classmethod
     def from_json(self, json: Dict):
+        
         return self(
             begin=datetime.fromisoformat(json['begin'][:-1]),
             building=json['building'],
