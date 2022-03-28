@@ -27,8 +27,8 @@ class Entry:
             raise Exception("No TIMEZONE env found!")
         set_tz = pytz.timezone(tz_str)
 
-        utc_begin: datetime = datetime.fromisoformat(json['begin'][:-1],tz=timezone.utc)
-        utc_end: datetime = datetime.fromisoformat(json['end'][:-1],tz=timezone.utc)
+        utc_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(timezone.utc)
+        utc_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(timezone.utc)
 
         tz_begin = utc_begin.astimezone(tz=set_tz)
         tz_end = utc_end.astimezone(tz=set_tz)
