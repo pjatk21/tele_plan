@@ -1,7 +1,9 @@
 from dataclasses import dataclass
-from datetime import datetime, time
+from datetime import datetime, time, timezone, tzinfo
+import os
 from typing import List, Dict, Optional
 from aiogram import utils
+import pytz
 
 
 @dataclass
@@ -18,12 +20,18 @@ class Entry:
 
     @classmethod
     def from_json(self, json: Dict):
-        
+        # Acknowledge timezones
+        try:
+            tz_str = os.getenv("TIMEZONE")
+        except:
+            raise Exception("No TIMEZONE env found!")
+        tz = pytz.timezone(tz_str)
+
         return self(
-            begin=datetime.fromisoformat(json['begin'][:-1]),
+            begin=tz.fromutc(datetime.fromisoformat(json['begin'][:-1]).astimezone(timezone.utc)),
             building=json['building'],
             code=json['code'],
-            end=datetime.fromisoformat(json['end'][:-1]),
+            end=tz.fromutc(datetime.fromisoformat(json['end'][:-1]).astimezone(timezone.utc)),
             groups=json['groups'],
             name=json['name'],
             room=json['room'],

@@ -7,3 +7,4 @@ services:
       context: .
     environment:
       - TELEGRAM_BOT_API=<secret>
+      - TIMEZONE=<timezone>
