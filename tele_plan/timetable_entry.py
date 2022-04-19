@@ -16,7 +16,7 @@ class Entry:
     name: str
     room: str
     type: str
-    tutor: Optional[str] = None
+    tutors: Optional[List[str]] = None
 
     @classmethod
     def from_json(self, json: Dict):
@@ -42,7 +42,7 @@ class Entry:
             name=json['name'],
             room=json['room'],
             type=json['type'],
-            tutor=json['tutor']
+            tutors=json['tutors']
         )
 
 
