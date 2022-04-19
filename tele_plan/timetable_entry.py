@@ -69,6 +69,7 @@ class Entry:
             markdown = utils.markdown.strikethrough(markdown)
             return markdown
         elif self.begin <= current_time <= self.end:
+            markdown = "⭐ " + markdown
             markdown = utils.markdown.bold(markdown)
             return markdown
 
