@@ -73,8 +73,10 @@ class Entry:
             )
 
         if current_time > self.end:
-            markdown = strike(markdown)
+            markdown = utils.markdown.strikethrough(markdown)
+            return markdown
         elif current_time >= self.begin:
-            markdown = bold(markdown)
+            markdown = utils.markdown.bold(markdown)
+            return markdown
 
         return utils.markdown.escape_md(markdown)
