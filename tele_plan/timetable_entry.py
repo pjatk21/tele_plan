@@ -72,9 +72,9 @@ class Entry:
                 self.building
             )
 
-        if current_time > self.end.time():
+        if current_time > self.end:
             markdown = strike(markdown)
-        elif current_time >= self.begin.time():
+        elif current_time >= self.begin:
             markdown = bold(markdown)
 
         return utils.markdown.escape_md(markdown)
