@@ -57,7 +57,7 @@ class Entry:
             )
         else:
             markdown = "{} - {} | {}: {} (sala {} w budynku {})\n".format(
-                time.isoformat(self.end.time(), timespec='minutes'),
+                time.isoformat(self.begin.time(), timespec='minutes'),
                 time.isoformat(self.end.time(), timespec='minutes'),
                 self.code,
                 self.name,
