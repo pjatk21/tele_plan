@@ -6,6 +6,13 @@ from aiogram import utils
 import pytz
 
 
+def strike(text):
+    return ''.join([u'\u0336{}'.format(c) for c in text])
+
+
+def bold(text):
+    return f"\033[1m{text}\033[0m"
+
 @dataclass
 class Entry:
     begin: datetime
@@ -57,7 +64,7 @@ class Entry:
             )
         else:
             markdown = "{} - {} | {}: {} (sala {} w budynku {})\n".format(
-                time.isoformat(self.begin.time(), timespec='minutes'),
+                time.isoformat(self.end.time(), timespec='minutes'),
                 time.isoformat(self.end.time(), timespec='minutes'),
                 self.code,
                 self.name,
