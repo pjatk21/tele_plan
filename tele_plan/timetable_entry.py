@@ -6,13 +6,6 @@ from aiogram import utils
 import pytz
 
 
-def strike(text):
-    return ''.join([u'\u0336{}'.format(c) for c in text])
-
-
-def bold(text):
-    return f"\033[1m{text}\033[0m"
-
 @dataclass
 class Entry:
     begin: datetime
@@ -75,7 +68,7 @@ class Entry:
         if current_time > self.end:
             markdown = utils.markdown.strikethrough(markdown)
             return markdown
-        elif current_time >= self.begin:
+        elif self.begin <= current_time <= self.end:
             markdown = utils.markdown.bold(markdown)
             return markdown
 
