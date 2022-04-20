@@ -39,6 +39,7 @@ async def get_timetable(telegram_message: types.Message):
     else:
         message = "*Oto twój plan lekcji na dziś:*\n"
         entries: List[Entry] = list(map(Entry.from_json, payload['entries']))
+        entries.sort()
 
         await telegram_message.answer(message + "".join(map(lambda x: x.to_markdown(), entries)), parse_mode=types.ParseMode.MARKDOWN_V2)
 

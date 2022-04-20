@@ -38,11 +38,14 @@ class Entry:
         tz_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(tz=set_tz)
         tz_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(tz=set_tz)
 
+        utc_begin = tz_begin.astimezone(tz=timezone.utc)
+        utc_end = tz_end.astimezone(tz=timezone.utc)
+
         return self(
-            begin=tz_begin,
+            begin=utc_begin,
             building=json['building'],
             code=json['code'],
-            end=tz_end,
+            end=utc_end,
             groups=json['groups'],
             name=json['name'],
             room=json['room'],
@@ -61,15 +64,15 @@ class Entry:
         current_time = datetime.now().astimezone(tz=set_tz)
         if self.type == "Wykład":
             markdown = "{} - {} | {}: {} (zdalny wykład na Teams)\n".format(
-                time.isoformat(self.begin.time(), timespec='minutes'),
-                time.isoformat(self.end.time(), timespec='minutes'),
+                time.isoformat(self.begin.astimezone(tz=set_tz).time(), timespec='minutes'),
+                time.isoformat(self.end.astimezone(tz=set_tz).time(), timespec='minutes'),
                 self.code,
                 self.name
             )
         else:
             markdown = "{} - {} | {}: {} (sala {} w budynku {})\n".format(
-                time.isoformat(self.begin.time(), timespec='minutes'),
-                time.isoformat(self.end.time(), timespec='minutes'),
+                time.isoformat(self.begin.astimezone(tz=set_tz).time(), timespec='minutes'),
+                time.isoformat(self.end.astimezone(tz=set_tz).time(), timespec='minutes'),
                 self.code,
                 self.name,
                 self.room,
