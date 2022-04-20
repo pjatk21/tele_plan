@@ -27,14 +27,8 @@ class Entry:
 
     @classmethod
     def from_json(self, json: Dict):
-        # Acknowledge timezones
-        set_tz = pytz.timezone("Europe/Warsaw")
-
-        tz_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(tz=set_tz)
-        tz_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(tz=set_tz)
-
-        utc_begin = tz_begin.astimezone(tz=timezone.utc)
-        utc_end = tz_end.astimezone(tz=timezone.utc)
+        utc_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(tz=timezone.utc)
+        utc_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(tz=timezone.utc)
 
         return self(
             begin=utc_begin,
@@ -51,7 +45,11 @@ class Entry:
 
     def to_markdown(self) -> str:
         # Acknowledge timezones
-        set_tz = pytz.timezone("Europe/Warsaw")
+        try:
+            tz_str = os.getenv("TZ")
+        except:
+            raise Exception("No TIMEZONE env found!")
+        set_tz = pytz.timezone(tz_str)
         current_time = datetime.now()
         if self.type == "Wykład":
             markdown = "{} - {} | {}: {} (zdalny wykład na Teams)\n".format(
