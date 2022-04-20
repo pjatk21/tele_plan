@@ -28,12 +28,7 @@ class Entry:
     @classmethod
     def from_json(self, json: Dict):
         # Acknowledge timezones
-        try:
-            tz_str = os.getenv("TZ")
-            assert tz_str == "Europe/Warsaw"
-        except:
-            raise Exception("No TIMEZONE env found!")
-        set_tz = pytz.timezone(tz_str)
+        set_tz = pytz.timezone("Europe/Warsaw")
 
         tz_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(tz=set_tz)
         tz_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(tz=set_tz)
