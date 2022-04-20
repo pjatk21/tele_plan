@@ -48,9 +48,9 @@ class Entry:
         try:
             tz_str = os.getenv("TZ")
         except:
-            raise Exception("No TIMEZONE env found!")
+            raise Exception("No TZ env found!")
         set_tz = pytz.timezone(tz_str)
-        current_time = datetime.now()
+        current_time = datetime.now().astimezone(tz=set_tz)
         if self.type == "Wykład":
             markdown = "{} - {} | {}: {} (zdalny wykład na Teams)\n".format(
                 time.isoformat(self.begin.astimezone(tz=set_tz).time(), timespec='minutes'),
