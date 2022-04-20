@@ -54,7 +54,7 @@ class Entry:
 
 
     def to_markdown(self) -> str:
-        current_time = datetime.now().astimezone(timezone.utc)
+        current_time = datetime.now()
         if self.type == "Wykład":
             markdown = "{} - {} | {}: {} (zdalny wykład na Teams)\n".format(
                 time.isoformat(self.begin.time(), timespec='minutes'),
