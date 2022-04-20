@@ -30,15 +30,13 @@ class Entry:
         # Acknowledge timezones
         try:
             tz_str = os.getenv("TZ")
+            assert tz_str == "Europe/Warsaw"
         except:
             raise Exception("No TIMEZONE env found!")
         set_tz = pytz.timezone(tz_str)
 
-        utc_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(timezone.utc)
-        utc_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(timezone.utc)
-
-        tz_begin = utc_begin.astimezone(tz=set_tz)
-        tz_end = utc_end.astimezone(tz=set_tz)
+        tz_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(tz=set_tz)
+        tz_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(tz=set_tz)
 
         return self(
             begin=tz_begin,
@@ -54,7 +52,13 @@ class Entry:
 
 
     def to_markdown(self) -> str:
-        current_time = datetime.now()
+        # Acknowledge timezones
+        try:
+            tz_str = os.getenv("TZ")
+        except:
+            raise Exception("No TIMEZONE env found!")
+        set_tz = pytz.timezone(tz_str)
+        current_time = datetime.now().astimezone(tz=set_tz)
         if self.type == "Wykład":
             markdown = "{} - {} | {}: {} (zdalny wykład na Teams)\n".format(
                 time.isoformat(self.begin.time(), timespec='minutes'),
