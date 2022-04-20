@@ -29,7 +29,7 @@ class Entry:
     def from_json(self, json: Dict):
         # Acknowledge timezones
         try:
-            tz_str = os.getenv("TIMEZONE")
+            tz_str = os.getenv("TZ")
         except:
             raise Exception("No TIMEZONE env found!")
         set_tz = pytz.timezone(tz_str)
