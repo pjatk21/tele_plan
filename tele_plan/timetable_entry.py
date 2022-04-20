@@ -27,8 +27,8 @@ class Entry:
 
     @classmethod
     def from_json(self, json: Dict):
-        utc_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).astimezone(tz=timezone.utc)
-        utc_end: datetime = datetime.fromisoformat(json['end'][:-1]).astimezone(tz=timezone.utc)
+        utc_begin: datetime = datetime.fromisoformat(json['begin'][:-1]).replace(tzinfo=pytz.utc)
+        utc_end: datetime = datetime.fromisoformat(json['end'][:-1]).replace(tzinfo=pytz.utc)
 
         return self(
             begin=utc_begin,
@@ -44,24 +44,19 @@ class Entry:
 
 
     def to_markdown(self) -> str:
-        # Acknowledge timezones
-        try:
-            tz_str = os.getenv("TZ")
-        except:
-            raise Exception("No TZ env found!")
-        set_tz = pytz.timezone(tz_str)
-        current_time = datetime.now().astimezone(tz=set_tz)
+        current_time = datetime.now(timezone.utc).astimezone()
+
         if self.type == "Wykład":
             markdown = "{} - {} | {}: {} (zdalny wykład na Teams)\n".format(
-                time.isoformat(self.begin.astimezone(tz=set_tz).time(), timespec='minutes'),
-                time.isoformat(self.end.astimezone(tz=set_tz).time(), timespec='minutes'),
+                time.isoformat(self.begin.astimezone().time(), timespec='minutes'),
+                time.isoformat(self.end.astimezone().time(), timespec='minutes'),
                 self.code,
                 self.name
             )
         else:
             markdown = "{} - {} | {}: {} (sala {} w budynku {})\n".format(
-                time.isoformat(self.begin.astimezone(tz=set_tz).time(), timespec='minutes'),
-                time.isoformat(self.end.astimezone(tz=set_tz).time(), timespec='minutes'),
+                time.isoformat(self.begin.astimezone().time(), timespec='minutes'),
+                time.isoformat(self.end.astimezone().time(), timespec='minutes'),
                 self.code,
                 self.name,
                 self.room,
