@@ -7,7 +7,7 @@ authors = ["Rafał Opiłowski <rafalopilowski1@outlook.com>"]
 [tool.poetry.dependencies]
 python = "3.10.4"
 aiogram = "^2.19"
-httpx = "^0.22.0"
+httpx = "^0.23.0"
 asyncio = "^3.4.3"
 
 [tool.poetry.dev-dependencies]
